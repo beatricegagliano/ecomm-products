@@ -25,7 +25,6 @@ public class ProductsService {
     }
 
     public Products updateProducts (Products products){
-        products.setId(products.getId());
         products.setBrand(products.getBrand());
         products.setDescription(products.getDescription());
         products.setModel(products.getModel());
