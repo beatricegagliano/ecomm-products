@@ -1,6 +1,6 @@
 FROM maven:3-jdk-8 as builder
 WORKDIR /project
-COPY ecomm-products .
+#COPY ecomm-products .
 
 FROM java:8-alpine
 WORKDIR /app

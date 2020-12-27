@@ -26,7 +26,7 @@ services:
   ecomm-products:
     build:
       context: .
-      dockerfile: ecomm-products/Dockerfile
+      dockerfile: Dockerfile
     ports:
       - "6666:6666"
     depends_on:
