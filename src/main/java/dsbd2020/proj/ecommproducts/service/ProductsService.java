@@ -24,7 +24,13 @@ public class ProductsService {
         return repository.findById(id).get();
     }
 
-    public Products updateProducts (Products products, Integer id){
+    public Products updateProducts (Products products){
+        products.setId(products.getId());
+        products.setBrand(products.getBrand());
+        products.setDescription(products.getDescription());
+        products.setModel(products.getModel());
+        products.setPrice(products.getPrice());
+        products.setQuantity(products.getQuantity());
         return repository.save(products);
     }
 

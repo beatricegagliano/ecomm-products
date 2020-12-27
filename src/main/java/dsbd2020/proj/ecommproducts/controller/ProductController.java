@@ -28,15 +28,23 @@ public class ProductController {
         return service.getProducts(id);
     }
 
-    @RequestMapping(path= "/products/{id}",method= RequestMethod.PUT)
+
+   @RequestMapping(value= "/products/{id}",method= RequestMethod.PUT)
     public @ResponseBody
-     Products updateProducts (@RequestBody Products products, @PathVariable Integer id){
-        return service.updateProducts(products,id);
+     Products updateProducts (@PathVariable Integer id,@RequestBody Products products){
+      service.getProducts(id);
+      return service.updateProducts(products);
+
     }
+
+
+
 
     @RequestMapping(value= "/products",method= RequestMethod.GET)
     public @ResponseBody
     Iterable<Products> getProductsAll(){
         return service.getProductsAll();
     }
+
+
 }
