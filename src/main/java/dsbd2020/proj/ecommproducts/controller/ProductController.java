@@ -3,9 +3,6 @@ package dsbd2020.proj.ecommproducts.controller;
 import dsbd2020.proj.ecommproducts.products.Products;
 import dsbd2020.proj.ecommproducts.service.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +15,8 @@ public class ProductController {
     
     @Autowired
     ProductsService service;
+
+
 
     @RequestMapping(value= "/products",method= RequestMethod.POST)
     public @ResponseBody
@@ -46,6 +45,9 @@ public class ProductController {
       return service.updateProducts(products);
 
     }
+
+
+
 /*
     @RequestMapping(value= "/products",method= RequestMethod.GET)
     public ResponseEntity<List<Products>> getProductsAll(
