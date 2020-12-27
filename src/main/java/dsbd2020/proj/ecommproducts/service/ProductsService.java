@@ -3,9 +3,18 @@ package dsbd2020.proj.ecommproducts.service;
 import dsbd2020.proj.ecommproducts.data.ProductsRepository;
 import dsbd2020.proj.ecommproducts.products.Products;
 import org.springframework.beans.factory.annotation.Autowired;
+
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -33,9 +42,21 @@ public class ProductsService {
         return repository.save(products);
     }
 
-
     public Iterable<Products> getProductsAll(){
         return repository.findAll();
     }
 
+
+/*
+    public List <Products> getProductsAll(Integer per_page, Integer page) {
+        per_page=per_page*(page-1);
+        Pageable paging = PageRequest.of(per_page, page);
+
+        Page<Products> pagedResult = repository.findAll(paging);
+
+
+        return pagedResult.getContent();
+
+    }
+*/
 }
