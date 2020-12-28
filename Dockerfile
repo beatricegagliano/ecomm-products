@@ -1,5 +1,6 @@
 FROM maven:3-jdk-8 as builder
 WORKDIR /project
+RUN mvn install
 #COPY ecomm-products .
 
 FROM java:8-alpine
