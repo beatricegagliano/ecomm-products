@@ -1,5 +1,5 @@
 FROM maven:3-jdk-8 as builder
-WORKDIR /project
+WORKDIR /projects
 RUN mvn install
 #COPY ecomm-products .
 
