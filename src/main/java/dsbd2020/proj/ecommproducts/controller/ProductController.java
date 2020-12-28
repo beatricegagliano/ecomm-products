@@ -12,43 +12,38 @@ import java.util.List;
 @Controller
 
 public class ProductController {
-    
+
     @Autowired
     ProductsService service;
 
 
-
-    @RequestMapping(value= "/products",method= RequestMethod.POST)
+    @RequestMapping(value = "/products", method = RequestMethod.POST)
     public @ResponseBody
-    Products addProducts (@RequestBody Products products){
+    Products addProducts(@RequestBody Products products) {
         return service.addProducts(products);
     }
 
-    @RequestMapping(value= "/products/{id}",method= RequestMethod.GET)
+    @RequestMapping(value = "/products/{id}", method = RequestMethod.GET)
     public @ResponseBody
-    Products getProducts(@PathVariable Integer id){
-        return service.getProducts(id);
-    }
+    Products getProducts(@PathVariable Integer id) { return service.getProducts(id); }
 
 
-    @RequestMapping(value= "/products",method= RequestMethod.GET)
+    @RequestMapping(value = "/products", method = RequestMethod.GET)
     public @ResponseBody
-    Iterable<Products> getProductsAll(){
-        return service.getProductsAll();
-    }
+    Iterable<Products> getProductsAll() { return service.getProductsAll(); }
 
 
-   @RequestMapping(value= "/products/{id}",method= RequestMethod.PUT)
+    @RequestMapping(value = "/products/{id}", method = RequestMethod.PUT)
     public @ResponseBody
-     Products updateProducts (@PathVariable Integer id,@RequestBody Products products){
-      service.getProducts(id);
-      return service.updateProducts(products);
+    Products updateProducts(@PathVariable Integer id, @RequestBody Products products) {
+        service.getProducts(id);
+        return service.updateProducts(products);
 
     }
 
-    @RequestMapping(value= "/ping",method= RequestMethod.GET)
+    @RequestMapping(value = "/ping", method = RequestMethod.GET)
     public @ResponseBody
-    String ping () {
+    String ping() {
         return "{"
                 + "'serviceStatus':'UP',"
                 + "'dbStatus':'UP'"
@@ -71,8 +66,6 @@ public class ProductController {
     }
 
 */
-
-
 
 
 

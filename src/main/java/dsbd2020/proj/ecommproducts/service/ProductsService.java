@@ -5,13 +5,8 @@ import dsbd2020.proj.ecommproducts.products.Products;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 
 @Service
@@ -26,9 +21,7 @@ public class ProductsService  {
     }
 
 
-    public Products getProducts(Integer id){
-        return repository.findById(id).get();
-    }
+    public Products getProducts(Integer id){ return repository.findById(id).get(); }
 
     public Products updateProducts (Products products){
         products.setBrand(products.getBrand());
@@ -58,4 +51,5 @@ public class ProductsService  {
 
     }
 */
+
 }
