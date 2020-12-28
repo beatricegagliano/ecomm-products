@@ -46,6 +46,16 @@ public class ProductController {
 
     }
 
+    @RequestMapping(value= "/ping",method= RequestMethod.GET)
+    public @ResponseBody
+    String ping () {
+        return "{"
+                + "'serviceStatus':'UP',"
+                + "'dbStatus':'UP'"
+                +
+                '}';
+    }
+
 
 
 /*
