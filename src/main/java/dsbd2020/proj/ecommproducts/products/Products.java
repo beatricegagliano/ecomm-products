@@ -9,6 +9,7 @@ import java.util.List;
 @Entity
 public class Products{
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
