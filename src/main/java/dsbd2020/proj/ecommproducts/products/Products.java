@@ -1,17 +1,31 @@
 package dsbd2020.proj.ecommproducts.products;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import dsbd2020.proj.ecommproducts.categories.Categories;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
-public class Products {
+public class Products{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
+
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    private List <Categories> categories;
+
+
+    public List<Categories> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Categories> categories) {
+        this.categories = categories;
+    }
+
 
     @NotNull
     private String brand;
@@ -26,6 +40,8 @@ public class Products {
 
     @NotNull
     private Integer quantity;
+
+
 
 
     public Integer getId() {
