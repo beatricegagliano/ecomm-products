@@ -12,7 +12,7 @@ import java.util.List;
 public class Categories {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer idC;
+    private Integer id;
 
     @NotNull
     private String name;
@@ -28,12 +28,12 @@ public class Categories {
         this.products = products;
     }
 
-    public Integer getIdC() {
-        return idC;
+    public Integer getId() {
+        return id;
     }
 
-    public Categories setIdC(Integer idC) {
-        this.idC = idC;
+    public Categories setId(Integer id) {
+        this.id = id;
         return this;
     }
 
@@ -50,7 +50,7 @@ public class Categories {
     @Override
     public String toString() {
         return "Categories{" +
-                "idC=" + idC +
+                "id=" + id +
                 ", name='" + name + '\'' +
                 ", products=" + products +
                 '}';
