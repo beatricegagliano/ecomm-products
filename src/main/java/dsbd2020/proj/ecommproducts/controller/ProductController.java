@@ -51,6 +51,13 @@ public class ProductController {
                 '}';
     }
 
+    @DeleteMapping(path="/products/{id}")
+    public @ResponseBody
+    String delete (@PathVariable Integer id) {
+        service.deletebyid(id);
+        return "product deleted";
+    }
+
 
 
 /*

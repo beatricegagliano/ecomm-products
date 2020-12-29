@@ -39,6 +39,4 @@ public class CategoriesController {
     return repository.save(categories);
     }
 
-
-
 }

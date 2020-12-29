@@ -36,7 +36,10 @@ public class ProductsService  {
         return repository.findAll();
     }
 
-
+    public String deletebyid (Integer id) {
+        repository.deleteById(id);
+        return "cancellato";
+    }
 
 
 /*
@@ -51,5 +54,6 @@ public class ProductsService  {
 
     }
 */
+
 
 }
