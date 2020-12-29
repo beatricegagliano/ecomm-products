@@ -35,5 +35,9 @@ services:
     environment:
       <<: *common-variables
 
+  fallback:
+    image: debian
+    command: sleep 36000
+
 volumes:
   mystorage:
