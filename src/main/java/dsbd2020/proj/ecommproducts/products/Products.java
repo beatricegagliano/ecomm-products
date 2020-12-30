@@ -1,7 +1,5 @@
 package dsbd2020.proj.ecommproducts.products;
-
 import dsbd2020.proj.ecommproducts.categories.Categories;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -15,7 +13,7 @@ public class Products{
     private Integer id;
 
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany
     private List <Categories> categories;
 
 
