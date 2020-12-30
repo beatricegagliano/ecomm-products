@@ -38,8 +38,8 @@ public class ProductController {
 
     @GetMapping(value="/products")
     public ResponseEntity<List<Products>> getAllProducts(
-            @RequestParam(defaultValue = "10") Integer perPage,
-            @RequestParam(defaultValue = "0") Integer page)
+            @RequestParam(defaultValue = "0") Integer perPage,
+            @RequestParam(defaultValue = "10") Integer page)
     {
         List<Products> list = service.getAllProducts(perPage,page);
 
