@@ -1,14 +1,13 @@
 package dsbd2020.proj.ecommproducts.data;
 
-import dsbd2020.proj.ecommproducts.products.Products;
+
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Map;
 
 public class ProductUpdateRequest implements Serializable {
     private Integer orderId;
-    private Products products;
-    private List<Products> lproducts;
+    private Map<Integer, Integer> lproducts;
     private Double total;
     private String shippingAddress;
     private String billingAddress;
@@ -25,20 +24,12 @@ public class ProductUpdateRequest implements Serializable {
         return this;
     }
 
-    public Products getProducts() {
-        return products;
-    }
 
-    public ProductUpdateRequest setProducts(Products products) {
-        this.products = products;
-        return this;
-    }
-
-    public List<Products> getLproducts() {
+    public Map<Integer, Integer> getLproducts() {
         return lproducts;
     }
 
-    public ProductUpdateRequest setLproducts(List<Products> lproducts) {
+    public ProductUpdateRequest setLproducts(Map<Integer, Integer> lproducts) {
         this.lproducts = lproducts;
         return this;
     }
@@ -88,4 +79,7 @@ public class ProductUpdateRequest implements Serializable {
         this.extraArgs = extraArgs;
         return this;
     }
+
+
+
 }

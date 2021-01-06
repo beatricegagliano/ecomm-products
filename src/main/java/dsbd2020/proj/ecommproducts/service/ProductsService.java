@@ -1,5 +1,6 @@
 package dsbd2020.proj.ecommproducts.service;
 
+import dsbd2020.proj.ecommproducts.data.ProductUpdateRequest;
 import dsbd2020.proj.ecommproducts.data.ProductsRepository;
 import dsbd2020.proj.ecommproducts.products.Products;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +11,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.ArrayList;
 import java.util.List;
+
 
 
 @Service
@@ -60,6 +61,8 @@ public class ProductsService  {
         repository.deleteById(id);
         return "cancellato";
     }
+
+
 
 
 

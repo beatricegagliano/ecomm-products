@@ -22,8 +22,6 @@ class KafkaConsumerConfig {
     @Value("${kafkaGroup}")
     private String consumerGroup;
 
-    @Value("${KafkaKey}")
-    private String key;
 
 
     @Bean

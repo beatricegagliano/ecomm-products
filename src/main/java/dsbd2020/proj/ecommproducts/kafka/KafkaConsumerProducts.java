@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
+
 
 @Component
 public class KafkaConsumerProducts {
@@ -22,38 +22,43 @@ public class KafkaConsumerProducts {
     @KafkaListener(topics = "${kafkaTopic}", groupId = "${kafkaGroup}")
 
     public void listenProductTopic(String message) {
+
         if (message != null) {
             ProductUpdateRequest updateRequest = new Gson().fromJson(message, ProductUpdateRequest.class);
-            List<Products> lproducts = new ArrayList<>();
-            for (Products i : lproducts) {
-                Optional<Products> product = repository.findById(updateRequest.getProducts().getId());
-                if (product.isPresent()) {
-                    Products p = product.get();
-                    p.setQuantity(p.getQuantity() - updateRequest.getProducts().getQuantity());
-                    repository.save(p);
-                }
-                System.out.println(i);
-                if (product.isPresent()) {
-                    Products p = product.get();
-                    double s = sum (p.getPrice() * p.getQuantity());
-                    if (s == updateRequest.getTotal())
-                    {
-                      System.out.println("Verifica ok\n ");
-                    }
+    Map<Integer,Integer> lproducts= new HashMap<>();
+            int status =0;
+    double total = 0.0;
 
-                }
+    for (Map.Entry <Integer,Integer> entry : lproducts.entrySet()){
+        Optional<Products> product = repository.findByIdAndQuantityGreaterThanEqual(entry.getKey(),entry.getValue());
+        if (!product.isPresent()) {
+            lproducts.put(entry.getKey(), entry.getValue()); }
+        else {
+           total = total + (product.get().getPrice() * product.get().getQuantity());
             }
+        }
 
+    if (lproducts.isEmpty() && total != updateRequest.getTotal())
+          status  = -3;
+    else if (lproducts.isEmpty())
+           status = -1;
+    else if (total!= updateRequest.getTotal())
+           status = -2;
+    else {
+        status = 0;
+
+        for (Map.Entry <Integer,Integer> entry : lproducts.entrySet()){
+         Optional <Products>  p = repository.findById(entry.getKey());
+         repository.save(p.get().setQuantity(p.get().getQuantity()- entry.getValue()));
+        }
+    }
+    }
         }
 
 
     }
 
-    private double sum(double v) {
-        double s=0;
-        s = s + v;
-        return s;
-    }
 
 
-}
+
+
