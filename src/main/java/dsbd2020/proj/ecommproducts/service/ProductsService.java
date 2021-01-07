@@ -11,9 +11,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.ArrayList;
-import java.util.List;
 
+import java.util.*;
 
 
 @Service
@@ -63,8 +62,37 @@ public class ProductsService  {
     }
 
 
+    public void updateQuantityPrice(ProductUpdateRequest updateRequest){
+        Map<Integer,Integer> lproducts= new HashMap<>();
+        int status =0;
+        double total = 0.0;
 
+        for (Map.Entry <Integer,Integer> entry : lproducts.entrySet()){
+            Optional<Products> product = repository.findByIdAndQuantityGreaterThanEqual(entry.getKey(),entry.getValue());
+            if (!product.isPresent()) {
+                lproducts.put(entry.getKey(), entry.getValue()); }
+            else {
+                total = total + (product.get().getPrice() * product.get().getQuantity());
+            }
+        }
 
+        if (lproducts.isEmpty() && total != updateRequest.getTotal())
+            status  = -3;
+        else if (lproducts.isEmpty())
+            status = -1;
+        else if (total!= updateRequest.getTotal())
+            status = -2;
+        else {
+            status = 0;
 
-
+            for (Map.Entry <Integer,Integer> entry : lproducts.entrySet()){
+                Optional <Products>  p = repository.findById(entry.getKey());
+                repository.save(p.get().setQuantity(p.get().getQuantity()- entry.getValue()));
+            }
+        }
+    }
 }
+
+
+
+

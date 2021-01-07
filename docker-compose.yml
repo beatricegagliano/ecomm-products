@@ -18,6 +18,7 @@ x-kafka-env: &kafka-env
   KAFKA_ADVERTISED_PORT: 9092
   BROKER_ID_COMMAND: "hostname | cut -d'-' -f2"
   KAFKA_ZOOKEEPER_CONNECT: "zoo:2181"
+  KAFKA_ADVERTISED_HOST_NAME: kafka
   KAFKA_CREATE_TOPICS: "logging:20:1,pushnotifications:10:1,invoicing:10:1,mailing:10:1,userupdates:10:1,orderupdates:10:1"
   KAFKA_LISTENERS: "PLAINTEXT://:9092"
 
