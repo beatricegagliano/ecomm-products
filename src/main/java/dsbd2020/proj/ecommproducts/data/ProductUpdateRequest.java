@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class ProductUpdateRequest implements Serializable {
     private Integer orderId;
-    private Map<Integer, Integer> lproducts;
+    private Map<Integer, Integer> products;
     private Double total;
     private String shippingAddress;
     private String billingAddress;
@@ -24,14 +24,12 @@ public class ProductUpdateRequest implements Serializable {
         return this;
     }
 
-
-    public Map<Integer, Integer> getLproducts() {
-        return lproducts;
+    public Map<Integer, Integer> getProducts() {
+        return products;
     }
 
-    public ProductUpdateRequest setLproducts(Map<Integer, Integer> lproducts) {
-        this.lproducts = lproducts;
-        return this;
+    public void setProducts(Map<Integer, Integer> products) {
+        this.products = products;
     }
 
     public Double getTotal() {

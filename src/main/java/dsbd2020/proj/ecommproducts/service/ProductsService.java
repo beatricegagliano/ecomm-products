@@ -17,19 +17,21 @@ import java.util.*;
 
 @Service
 @Transactional
-public class ProductsService  {
+public class ProductsService {
     @Autowired
     ProductsRepository repository;
 
 
-    public Products addProducts (Products products){
+    public Products addProducts(Products products) {
         return repository.save(products);
     }
 
 
-    public Products getProducts(Integer id){ return repository.findById(id).get(); }
+    public Products getProducts(Integer id) {
+        return repository.findById(id).get();
+    }
 
-    public Products updateProducts (Products products){
+    public Products updateProducts(Products products) {
         products.setBrand(products.getBrand());
         products.setDescription(products.getDescription());
         products.setModel(products.getModel());
@@ -43,56 +45,48 @@ public class ProductsService  {
         return repository.findAll();
     }
 */
-    public List<Products> getAllProducts(Integer perPage, Integer page)
-    {
-        Pageable paging = PageRequest.of(perPage,page);
+    public List<Products> getAllProducts(Integer perPage, Integer page) {
+        Pageable paging = PageRequest.of(perPage, page);
 
         Page<Products> pagedResult = repository.findAll(paging);
 
-        if(pagedResult.hasContent()) {
+        if (pagedResult.hasContent()) {
             return pagedResult.getContent();
         } else {
             return new ArrayList<Products>();
         }
     }
 
-    public String deletebyid (Integer id) {
+    public String deletebyid(Integer id) {
         repository.deleteById(id);
         return "cancellato";
     }
 
 
-    public void updateQuantityPrice(ProductUpdateRequest updateRequest){
-        Map<Integer,Integer> lproducts= new HashMap<>();
-        int status =0;
+    public void updateQuantityPrice(ProductUpdateRequest updateRequest) {
         double total = 0.0;
-
-        for (Map.Entry <Integer,Integer> entry : lproducts.entrySet()){
-            Optional<Products> product = repository.findByIdAndQuantityGreaterThanEqual(entry.getKey(),entry.getValue());
-            if (!product.isPresent()) {
-                lproducts.put(entry.getKey(), entry.getValue()); }
-            else {
-                total = total + (product.get().getPrice() * product.get().getQuantity());
+        int status = 0;
+        for (Map.Entry<Integer, Integer> entry : updateRequest.getProducts().entrySet()) {
+            Optional<Products> p = repository.findById(entry.getKey());
+            total = total + (p.get().getPrice() * entry.getValue());
+            if (p != null && p.get().getQuantity() >= entry.getValue() && total == updateRequest.getTotal()) {
+                repository.save(p.get().setQuantity(p.get().getQuantity() - entry.getValue()));
+                status = 0;
+            } else {
+                status = -3;
             }
-        }
 
-        if (lproducts.isEmpty() && total != updateRequest.getTotal())
-            status  = -3;
-        else if (lproducts.isEmpty())
-            status = -1;
-        else if (total!= updateRequest.getTotal())
-            status = -2;
-        else {
-            status = 0;
+            if (total != updateRequest.getTotal()) {
+                status = -2;
+            }
+            if (p != null && p.get().getQuantity() <= entry.getValue()) {
+                status = -1;
 
-            for (Map.Entry <Integer,Integer> entry : lproducts.entrySet()){
-                Optional <Products>  p = repository.findById(entry.getKey());
-                repository.save(p.get().setQuantity(p.get().getQuantity()- entry.getValue()));
             }
         }
     }
+
+
 }
-
-
 
 

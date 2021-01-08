@@ -11,5 +11,5 @@ import java.util.Optional;
 public interface ProductsRepository extends CrudRepository <Products, Integer> , PagingAndSortingRepository <Products,Integer> {
 
 
-    Optional<Products> findByIdAndQuantityGreaterThanEqual(Integer key, Integer value);
+
 }
