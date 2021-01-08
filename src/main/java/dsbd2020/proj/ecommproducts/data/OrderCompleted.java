@@ -5,7 +5,7 @@ package dsbd2020.proj.ecommproducts.data;
 import java.io.Serializable;
 import java.util.Map;
 
-public class ProductUpdateRequest implements Serializable {
+public class OrderCompleted implements Serializable {
     private Integer orderId;
     private Map<Integer, Integer> products;
     private Double total;
@@ -19,7 +19,7 @@ public class ProductUpdateRequest implements Serializable {
         return orderId;
     }
 
-    public ProductUpdateRequest setOrderId(Integer orderId) {
+    public OrderCompleted setOrderId(Integer orderId) {
         this.orderId = orderId;
         return this;
     }
@@ -36,7 +36,7 @@ public class ProductUpdateRequest implements Serializable {
         return total;
     }
 
-    public ProductUpdateRequest setTotal(Double total) {
+    public OrderCompleted setTotal(Double total) {
         this.total = total;
         return this;
     }
@@ -45,7 +45,7 @@ public class ProductUpdateRequest implements Serializable {
         return shippingAddress;
     }
 
-    public ProductUpdateRequest setShippingAddress(String shippingAddress) {
+    public OrderCompleted setShippingAddress(String shippingAddress) {
         this.shippingAddress = shippingAddress;
         return this;
     }
@@ -54,7 +54,7 @@ public class ProductUpdateRequest implements Serializable {
         return billingAddress;
     }
 
-    public ProductUpdateRequest setBillingAddress(String billingAddress) {
+    public OrderCompleted setBillingAddress(String billingAddress) {
         this.billingAddress = billingAddress;
         return this;
 
@@ -64,7 +64,7 @@ public class ProductUpdateRequest implements Serializable {
         return userId;
     }
 
-    public ProductUpdateRequest setUserId(Integer userId) {
+    public OrderCompleted setUserId(Integer userId) {
         this.userId = userId;
         return this;
     }
@@ -73,7 +73,7 @@ public class ProductUpdateRequest implements Serializable {
         return extraArgs;
     }
 
-    public ProductUpdateRequest setExtraArgs(String extraArgs) {
+    public OrderCompleted setExtraArgs(String extraArgs) {
         this.extraArgs = extraArgs;
         return this;
     }

@@ -1,14 +1,16 @@
 package dsbd2020.proj.ecommproducts.service;
 
-import dsbd2020.proj.ecommproducts.data.ProductUpdateRequest;
+import dsbd2020.proj.ecommproducts.data.OrderCompleted;
 import dsbd2020.proj.ecommproducts.data.ProductsRepository;
 import dsbd2020.proj.ecommproducts.products.Products;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +22,32 @@ import java.util.*;
 public class ProductsService {
     @Autowired
     ProductsRepository repository;
+
+    @Value("${kafkaTopic}")
+    private String topicName;
+    @Value("${kafkaTopic1}")
+    private String topicName1;
+    @Value ("${kafkaTopic2}")
+    private String topicName2;
+
+    @Autowired
+    private KafkaTemplate<String,String> template;
+
+
+
+    public void sendMessage(String msg) {
+        template.send(topicName,msg);
+    }
+
+    public void sendMessage1(String msg) {
+        template.send(topicName1,msg);
+    }
+    public void sendMessage2(String msg) {
+        template.send(topicName2,msg);
+    }
+
+
+
 
 
     public Products addProducts(Products products) {
@@ -63,7 +91,8 @@ public class ProductsService {
     }
 
 
-    public void updateQuantityPrice(ProductUpdateRequest updateRequest) {
+
+    public void updateQuantityPrice(OrderCompleted updateRequest) {
         double total = 0.0;
         int status = 0;
         for (Map.Entry<Integer, Integer> entry : updateRequest.getProducts().entrySet()) {
@@ -75,16 +104,15 @@ public class ProductsService {
             } else {
                 status = -3;
             }
-
             if (total != updateRequest.getTotal()) {
                 status = -2;
             }
             if (p != null && p.get().getQuantity() <= entry.getValue()) {
                 status = -1;
-
             }
         }
     }
+
 
 
 }
