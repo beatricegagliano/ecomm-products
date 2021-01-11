@@ -12,7 +12,7 @@ public class OrderCompleted implements Serializable {
     private String shippingAddress;
     private String billingAddress;
     private Integer userId;
-    private String extraArgs;
+    private Map<Integer, Integer> extraArgs;
 
 
     public Integer getOrderId() {
@@ -69,15 +69,11 @@ public class OrderCompleted implements Serializable {
         return this;
     }
 
-    public String getExtraArgs() {
+    public Map<Integer, Integer> getExtraArgs() {
         return extraArgs;
     }
 
-    public OrderCompleted setExtraArgs(String extraArgs) {
+    public void setExtraArgs(Map<Integer, Integer> extraArgs) {
         this.extraArgs = extraArgs;
-        return this;
     }
-
-
-
 }

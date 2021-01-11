@@ -1,6 +1,8 @@
 package dsbd2020.proj.ecommproducts.service;
 
+import com.google.gson.Gson;
 import dsbd2020.proj.ecommproducts.data.OrderCompleted;
+import dsbd2020.proj.ecommproducts.data.OrderValidation;
 import dsbd2020.proj.ecommproducts.data.ProductsRepository;
 import dsbd2020.proj.ecommproducts.products.Products;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,15 +37,15 @@ public class ProductsService {
 
 
 
-    public void sendMessage(String msg) {
-        template.send(topicName,msg);
+    public void sendMessage(String topic,String key,String value) {
+        template.send(topicName,key,value);
     }
 
-    public void sendMessage1(String msg) {
-        template.send(topicName1,msg);
+    public void sendMessage1(String topic,String key,String value) {
+        template.send(topicName1,key,value);
     }
-    public void sendMessage2(String msg) {
-        template.send(topicName2,msg);
+    public void sendMessage2(String topic,String key,String value) {
+        template.send(topicName2,key,value);
     }
 
 
@@ -91,7 +93,7 @@ public class ProductsService {
     }
 
 
-
+/*
     public void updateQuantityPrice(OrderCompleted updateRequest) {
         double total = 0.0;
         int status = 0;
@@ -112,7 +114,59 @@ public class ProductsService {
             }
         }
     }
+*/
 
+    public void updateQuantityPrice(OrderCompleted orderC) {
+        double total = 0.0;
+        for (Map.Entry<Integer, Integer> entry : orderC.getProducts().entrySet()) {
+            Optional<Products> p = repository.findById(entry.getKey());
+            total = total + (p.get().getPrice() * entry.getValue());
+            if (p != null && p.get().getQuantity() >= entry.getValue() && total == orderC.getTotal()) {
+                repository.save(p.get().setQuantity(p.get().getQuantity() - entry.getValue()));
+                OrderValidation order = new OrderValidation()
+                .setTimestamp(System.currentTimeMillis())
+                .setStatus(0)
+                .setOrderId(orderC.getOrderId())
+                .setExtraArgs(null);
+                String value = new Gson().toJson(order);
+                sendMessage(topicName,"order_validation",value);
+                sendMessage1(topicName1,"order_validation",value);
+            } if (p != null && p.get().getQuantity() <= entry.getValue() && total != orderC.getTotal()) {
+                OrderValidation order = new OrderValidation()
+                        .setTimestamp(System.currentTimeMillis())
+                        .setStatus(-3)
+                        .setOrderId(orderC.getOrderId())
+                        .setExtraArgs(null);
+                String value = new Gson().toJson(order);
+                sendMessage(topicName,"order_validation",value);
+                sendMessage1(topicName1,"order_validation",value);
+                sendMessage2(topicName2,"order_validation",value);
+            }
+            if (total != orderC.getTotal()) {
+                OrderValidation order = new OrderValidation()
+                        .setTimestamp(System.currentTimeMillis())
+                        .setStatus(-2)
+                        .setOrderId(orderC.getOrderId())
+                        .setExtraArgs(null);
+                String value = new Gson().toJson(order);
+                sendMessage(topicName,"order_validation",value);
+                sendMessage1(topicName1,"order_validation",value);
+                sendMessage2(topicName2,"order_validation",value);
+            }
+            if (p != null && p.get().getQuantity() <= entry.getValue()) {
+                Map <Integer, Integer> unvailable = new HashMap<>();
+                unvailable.put(entry.getKey(), entry.getValue());
+                OrderValidation order = new OrderValidation()
+                        .setTimestamp(System.currentTimeMillis())
+                        .setStatus(-1)
+                        .setOrderId(orderC.getOrderId())
+                        .setExtraArgs(unvailable);
+                String value = new Gson().toJson(order);
+                sendMessage(topicName,"order_validation",value);
+                sendMessage1(topicName1,"order_validation",value);
+            }
+        }
+    }
 
 
 }

@@ -1,6 +1,7 @@
 package dsbd2020.proj.ecommproducts.kafka;
 import com.google.gson.Gson;
 import dsbd2020.proj.ecommproducts.data.OrderCompleted;
+import dsbd2020.proj.ecommproducts.data.OrderValidation;
 import dsbd2020.proj.ecommproducts.service.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -19,8 +20,8 @@ public class KafkaConsumerProducts {
     public void listenProductTopic(String message) {
 
         if (message != null) {
-            OrderCompleted updateRequest = new Gson().fromJson(message, OrderCompleted.class);
-            service.updateQuantityPrice(updateRequest);
+            OrderCompleted orderC = new Gson().fromJson(message, OrderCompleted.class);
+            service.updateQuantityPrice(orderC);
 
 
 

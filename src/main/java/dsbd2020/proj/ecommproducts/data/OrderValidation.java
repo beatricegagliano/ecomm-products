@@ -1,22 +1,20 @@
 package dsbd2020.proj.ecommproducts.data;
 
 import java.io.Serializable;
-
-import java.sql.Timestamp;
 import java.util.Map;
 
 
 public class OrderValidation implements Serializable {
-    private Timestamp timestamp;
+    private long timestamp;
     private Integer status;
     private Integer orderId;
     private Map<Integer, Integer> extraArgs;
 
-    public Timestamp getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
-    public OrderValidation setTimestamp(Timestamp timestamp) {
+    public OrderValidation setTimestamp(long timestamp) {
         this.timestamp = timestamp;
         return this;
     }
@@ -47,4 +45,7 @@ public class OrderValidation implements Serializable {
         this.extraArgs = extraArgs;
         return this;
     }
+
+
+
 }
