@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import dsbd2020.proj.ecommproducts.data.OrderCompleted;
 import dsbd2020.proj.ecommproducts.data.OrderValidation;
 import dsbd2020.proj.ecommproducts.data.ProductsRepository;
+import dsbd2020.proj.ecommproducts.exceptionhandler.ProductsNotFounds;
 import dsbd2020.proj.ecommproducts.products.Products;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -58,7 +59,8 @@ public class ProductsService {
 
 
     public Products getProducts(Integer id) {
-        return repository.findById(id).get();
+        return repository.findById(id)
+        .orElseThrow(() -> new ProductsNotFounds(id));
     }
 
     public Products updateProducts(Products products) {
