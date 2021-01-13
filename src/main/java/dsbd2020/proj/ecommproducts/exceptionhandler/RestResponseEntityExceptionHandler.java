@@ -1,15 +1,16 @@
 package dsbd2020.proj.ecommproducts.exceptionhandler;
 
 
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.util.Date;
+import java.util.logging.Logger;
 
 
 @ControllerAdvice
@@ -24,17 +25,23 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     }
 
 
-
-    @ExceptionHandler(Throwable.class)
-    public @ResponseBody ResponseEntity<ErrorResponse> handleDefaultException(Throwable ex) {
-        ErrorResponse errorResponse = new ErrorResponse(ex);
-        errorResponse.setMessage("request has empty body  or exception occured");
-        return new ResponseEntity<ErrorResponse>(errorResponse, HttpStatus.BAD_REQUEST);
+    @ExceptionHandler(Exception.class)
+    @ResponseBody
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public String handleException(Exception e) {
+        return "request has empty body  or exception occured";
     }
 
 
 
 }
+
+
+
+
+
+
+
 
 
 
