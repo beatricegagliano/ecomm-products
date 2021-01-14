@@ -28,12 +28,7 @@ public class CategoriesController {
         return service.getCategories(id);
     }
 
-  /*  @GetMapping(path="/categories")
-    public @ResponseBody
-    Iterable <Categories> getCategoriesAll () {
-        return repository.findAll();
-    }
-  */
+
   @GetMapping(value="/categories")
   public ResponseEntity<List<Categories>> getAllCategories(
           @RequestParam(defaultValue = "0") Integer perPage,

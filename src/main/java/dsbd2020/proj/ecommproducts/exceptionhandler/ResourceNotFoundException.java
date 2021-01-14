@@ -4,8 +4,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class ProductsNotFounds extends RuntimeException{
-    public ProductsNotFounds(Integer id) {
-        super(String.format("Product with Id %d not found", id));
+public class ResourceNotFoundException extends RuntimeException {
+
+    public ResourceNotFoundException(Integer id) {
+        super(String.format("Products with Id %d non found",id));
     }
+
+
 }

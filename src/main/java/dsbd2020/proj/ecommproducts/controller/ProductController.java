@@ -28,11 +28,7 @@ public class ProductController {
     public @ResponseBody
     Products getProducts(@PathVariable Integer id) {  return service.getProducts(id); }
 
-/*
-    @RequestMapping(value = "/products", method = RequestMethod.GET)
-    public @ResponseBody
-    Iterable<Products> getProductsAll() { return service.getProductsAll(); }
-*/
+
 
     @GetMapping(value="/products")
     public ResponseEntity<List<Products>> getAllProducts(

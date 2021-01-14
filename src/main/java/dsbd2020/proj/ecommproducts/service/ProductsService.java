@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import dsbd2020.proj.ecommproducts.data.OrderCompleted;
 import dsbd2020.proj.ecommproducts.data.OrderValidation;
 import dsbd2020.proj.ecommproducts.data.ProductsRepository;
-import dsbd2020.proj.ecommproducts.exceptionhandler.ProductsNotFounds;
+import dsbd2020.proj.ecommproducts.exceptionhandler.ResourceNotFoundException;
 import dsbd2020.proj.ecommproducts.products.Products;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -60,7 +60,8 @@ public class ProductsService {
 
     public Products getProducts(Integer id) {
         return repository.findById(id)
-        .orElseThrow(() -> new ProductsNotFounds(id));
+                .orElseThrow(()-> new ResourceNotFoundException(id));
+
     }
 
     public Products updateProducts(Products products) {
@@ -72,11 +73,7 @@ public class ProductsService {
         return repository.save(products);
     }
 
-    /*
-   public Iterable<Products> getProductsAll(){
-        return repository.findAll();
-    }
-*/
+
     public List<Products> getAllProducts(Integer perPage, Integer page) {
         Pageable paging = PageRequest.of(perPage, page);
 
@@ -92,31 +89,9 @@ public class ProductsService {
     public String deletebyid(Integer id) {
         repository.deleteById(id);
         return "cancellato";
+
     }
 
-
-/*
-    public void updateQuantityPrice(OrderCompleted updateRequest) {
-        double total = 0.0;
-        int status = 0;
-        for (Map.Entry<Integer, Integer> entry : updateRequest.getProducts().entrySet()) {
-            Optional<Products> p = repository.findById(entry.getKey());
-            total = total + (p.get().getPrice() * entry.getValue());
-            if (p != null && p.get().getQuantity() >= entry.getValue() && total == updateRequest.getTotal()) {
-                repository.save(p.get().setQuantity(p.get().getQuantity() - entry.getValue()));
-                status = 0;
-            } else {
-                status = -3;
-            }
-            if (total != updateRequest.getTotal()) {
-                status = -2;
-            }
-            if (p != null && p.get().getQuantity() <= entry.getValue()) {
-                status = -1;
-            }
-        }
-    }
-*/
 
     public void updateQuantityPrice(OrderCompleted orderC) {
         double total = 0.0;
